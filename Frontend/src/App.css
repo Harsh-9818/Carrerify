@@ -1,0 +1,78 @@
+/* Set global styles for dark theme */
+body {
+  background-color: black;
+  color: white;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Chatbot container */
+.chatbot-container {
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* Question styling */
+.question-heading {
+  color: cyan;
+  background-color: black;
+  padding: 10px;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+/* Buttons */
+.option-button {
+  margin: 5px;
+  padding: 10px;
+  display: block;
+  width: 100%;
+  background-color: cyan;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.option-button:hover {
+  background-color: #00cccc;
+}
+
+/* Career Cards in Row */
+.career-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+/* Individual Career Card */
+.career-card {
+  background: #222;
+  padding: 15px;
+  border-radius: 10px;
+  width: 90%;
+  box-shadow: 0px 0px 5px rgba(0, 255, 255, 0.5);
+  text-align: left;
+}
+
+/* Roadmap List - Remove Bullet Points */
+.career-card ul {
+  list-style-type: none;  /* ✅ Removes bullet points */
+  padding: 0;
+}
+
+.career-card h4 {
+  margin: 0;
+  color: cyan;
+}
+
+.career-card p {
+  font-size: 14px;
+  color: white;
+}
