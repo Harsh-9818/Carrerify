@@ -22,6 +22,7 @@ const Chatbot = () => {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [careerText, setCareerText] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleAnswer = async (answer) => {
     const newAnswers = [...answers, answer];
@@ -30,6 +31,7 @@ const Chatbot = () => {
     if (step + 1 < questions.length) {
       setStep(step + 1);
     } else {
+      setLoading(true);
       try {
         const response = await axios.post("http://localhost:5000/api/career-recommendation", { userInput: newAnswers.join(", ") });
         setCareerText(response.data.career || "Try exploring AI, Cybersecurity, or Cloud!");
@@ -37,13 +39,13 @@ const Chatbot = () => {
         console.error("Error fetching career recommendation:", error);
         setCareerText("Error fetching career recommendation. Try again later.");
       }
+      setLoading(false);
     }
   };
 
-  // ✅ Function to parse structured text response
   const parseCareers = (text) => {
     const careers = [];
-    const sections = text.split("## ").slice(1); // Split by "## Career Title" and ignore the first empty part
+    const sections = text.split("## ").slice(1);
 
     sections.forEach((section) => {
       const lines = section.split("\n").filter((line) => line.trim() !== "");
@@ -55,7 +57,7 @@ const Chatbot = () => {
       const time = timeMatch ? timeMatch.replace("⏳ **Estimated Time to Learn:**", "").trim() : "";
 
       const roadmap = lines
-        .filter((line) => line.startsWith("- ")) // Extract roadmap steps
+        .filter((line) => line.startsWith("- "))
         .map((step) => step.replace("- ", "").trim());
 
       careers.push({ title, description, roadmap, time });
@@ -66,12 +68,23 @@ const Chatbot = () => {
 
   const careers = parseCareers(careerText);
 
+  const handleReload = () => {
+    setStep(0);
+    setAnswers([]);
+    setCareerText("");
+    setLoading(false);
+  };
+
   return (
     <div className="chatbot-container">
-      <h1>Careerify</h1>
-      <h2>Get carrer recommendation using AI</h2>
+      <div className="chatbot-header">
+        <h1>Careerify</h1>
+        <button className="reload-button" onClick={handleReload}>Restart AI</button>
+      </div>
+      <h2>GET CAREER RECOMMENDATION USING AI</h2>
       <h3>Answer some Questions to get personalised career recommendations.</h3>
-      {!careerText ? (
+
+      {!careerText && !loading ? (
         <div>
           <p className="question-heading"><strong>{questions[step].text}</strong></p>
           {questions[step].options.map((option, index) => (
@@ -80,6 +93,8 @@ const Chatbot = () => {
             </button>
           ))}
         </div>
+      ) : loading ? (
+        <div className="loading-text">🤖 AI is analyzing your responses... Please wait!</div>
       ) : (
         <div>
           <h3>Recommended Career Paths 🚀</h3>

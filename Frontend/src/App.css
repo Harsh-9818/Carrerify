@@ -76,3 +76,25 @@ body {
   font-size: 14px;
   color: white;
 }
+
+.chatbot-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.reload-button {
+  background-color: cyan;
+  color: black;
+  font-weight: bold;
+  border: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.reload-button:hover {
+  background-color: rgba(0, 255, 255, 0.804);
+}
